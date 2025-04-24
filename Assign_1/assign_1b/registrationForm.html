@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <title>Registration Form</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+      .form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* height: 100vh; */
+      }
+      .userForm {
+        width: 300px;
+        background-color: #333;
+        color: white;
+        padding: 20px;
+        border-radius: 5px;
+      }
+      h1 {
+        text-align: center;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #2c78c9;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Registration Form</h1>
+    <div class="form-container">
+      <form class="userForm" id="userForm">
+        <label for="name">Name:</label><br />
+        <input
+          type="text"
+          id="name"
+          name="name"
+          maxlength="30"
+          required /><br /><br />
+
+        <label for="email">Email:</label><br />
+        <input type="email" id="email" name="email" required /><br /><br />
+
+        <label for="password">Password:</label><br />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          minlength="8"
+          maxlength="16"
+          required /><br /><br />
+
+        <label>Gender:</label><br />
+        <input type="radio" name="gender" id="male" value="male" checked />
+        <label for="male">Male</label>
+        <input type="radio" name="gender" id="female" value="female" />
+        <label for="female">Female</label><br /><br />
+
+        <label for="DOB">DOB:</label>
+        <input
+          type="date"
+          id="DOB"
+          name="DOB"
+          min="1980-01-01"
+          max="2005-01-01" /><br /><br />
+
+        <label for="city">City:</label>
+        <select name="city" id="city" required>
+          <option value="">Select City</option>
+          <option value="Delhi">Delhi</option>
+          <option value="Mumbai">Mumbai</option>
+          <option value="Pune">Pune</option>
+          <option value="Bangalore">Bangalore</option></select
+        ><br /><br />
+
+        <label>Hobbies:</label><br />
+        <input type="checkbox" name="hobbies" value="Badminton" /> Badminton
+        <br />
+        <input type="checkbox" name="hobbies" value="Cricket" /> Cricket <br />
+        <input type="checkbox" name="hobbies" value="Football" /> Football
+        <br />
+        <input type="checkbox" name="hobbies" value="Volleyball" /> Volleyball
+        <br /><br />
+
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("userForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent default form submission
+
+          const name = document.getElementById("name").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value.trim();
+          const gender = document.querySelector(
+            'input[name="gender"]:checked'
+          ).value;
+          const city = document.getElementById("city").value;
+          const dob = document.getElementById("DOB").value;
+
+          const hobbyElements = document.querySelectorAll(
+            'input[name="hobbies"]:checked'
+          );
+          const hobbies = Array.from(hobbyElements)
+            .map((hobby) => hobby.value)
+            .join(", ");
+
+          if (!city) {
+            alert("Please select a city.");
+            return;
+          }
+          if (hobbyElements.length === 0) {
+            alert("Please select at least one hobby.");
+            return;
+          }
+
+          // Store form data in localStorage
+          const formData = {
+            name: name,
+            email: email,
+            password: password,
+            gender: gender,
+            city: city,
+            dob: dob,
+            hobbies: hobbies,
+          };
+          localStorage.setItem("formData", JSON.stringify(formData));
+
+          // Redirect to output.html
+          window.location.href = "output.html";
+        });
+    </script>
+  </body>
+</html>

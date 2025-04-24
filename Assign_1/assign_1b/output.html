@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Submission Result</title>
+    <style>
+      .container {
+        width: 50%;
+        margin: auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        border: 2px solid gray;
+      }
+
+      .data-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      p {
+        margin: 10px 2px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Form Submitted Successfully</h1>
+      <div class="data-container">
+        <p><strong>Name:</strong> <span id="name"></span></p>
+        <p><strong>Email:</strong> <span id="email"></span></p>
+        <p><strong>Gender:</strong> <span id="gender"></span></p>
+        <p><strong>Date of Birth:</strong> <span id="dob"></span></p>
+        <p><strong>City:</strong> <span id="city"></span></p>
+        <p><strong>Hobbies:</strong> <span id="hobbies"></span></p>
+      </div>
+    </div>
+
+    <script>
+      // Retrieve form data from localStorage
+      const formData = JSON.parse(localStorage.getItem("formData"));
+
+      if (formData) {
+        document.getElementById("name").textContent = formData.name;
+        document.getElementById("email").textContent = formData.email;
+        document.getElementById("gender").textContent = formData.gender;
+        document.getElementById("dob").textContent = formData.dob;
+        document.getElementById("city").textContent = formData.city;
+        document.getElementById("hobbies").textContent = formData.hobbies;
+      }
+    </script>
+  </body>
+</html>

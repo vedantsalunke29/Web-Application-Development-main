@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Library</title>
+<body>
+
+    <h2>Music Library</h2>
+
+    <h3>Add a New Song</h3>
+    <input type="text" id="songname" placeholder="Song Name">
+    <input type="text" id="film" placeholder="Film">
+    <input type="text" id="music_director" placeholder="Music Director">
+    <input type="text" id="singer" placeholder="Singer">
+    <input type="text" id="actor" placeholder="Actor">
+    <input type="text" id="actress" placeholder="Actress">
+    <button onclick="addSong()">Add Song</button>
+
+    <h3>Update a Song</h3>
+    <input type="text" id="update_songname" placeholder="Song Name">
+    <input type="text" id="update_actor" placeholder="Actor">
+    <input type="text" id="update_actress" placeholder="Actress">
+    <button onclick="updateSong()">Update Song</button>
+
+    <h3>All Songs</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Song Name</th>
+                <th>Film</th>
+                <th>Music Director</th>
+                <th>Singer</th>
+                <th>Actor</th>
+                <th>Actress</th>
+            </tr>
+        </thead>
+        <tbody id="songTable"></tbody>
+    </table>
+
+    <script>
+        const apiUrl = "http://localhost:5000"; 
+
+        function fetchSongs() {
+            fetch(`${apiUrl}/songs`)
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById("songTable");
+                    tableBody.innerHTML = "";
+                    data.forEach(song => {
+                        tableBody.innerHTML += `
+                            <tr>
+                                <td>${song.songname}</td>
+                                <td>${song.film}</td>
+                                <td>${song.music_director}</td>
+                                <td>${song.singer}</td>
+                                <td>${song.actor || "NA"}</td>
+                                <td>${song.actress || "NA"}</td>
+                                
+                            </tr>
+                        `;
+                    });
+                })
+                .catch(error => console.error("Error fetching songs:", error));
+        }
+
+        function addSong() {
+            const song = {
+                songname: document.getElementById("songname").value,
+                film: document.getElementById("film").value,
+                music_director: document.getElementById("music_director").value,
+                singer: document.getElementById("singer").value
+            };
+
+            fetch(`${apiUrl}/add-song`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(song)
+            })
+            .then(() => {
+                fetchSongs();
+                alert("Song added!");
+            })
+            .catch(error => console.error("Error adding song:", error));
+        }
+
+        function deleteSong(songname) {
+            fetch(`${apiUrl}/delete-song/${songname}`, { method: "DELETE" })
+            .then(() => {
+                fetchSongs();
+                alert("Song deleted!");
+            })
+            .catch(error => console.error("Error deleting song:", error));
+        }
+
+        function updateSong() {
+            const songname = document.getElementById("update_songname").value;
+            const actor = document.getElementById("update_actor").value;
+            const actress = document.getElementById("update_actress").value;
+
+            fetch(`${apiUrl}/update-song`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ songname, actor, actress })
+            })
+            .then(() => {
+                fetchSongs();
+                alert("Song updated!");
+            })
+            .catch(error => console.error("Error updating song:", error));
+        }
+
+        fetchSongs();
+    </script>
+
+</body>
+</html>

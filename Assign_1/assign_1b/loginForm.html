@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Form</title>
+    <style>
+      body {
+        * {
+          margin: 0;
+          padding: 0;
+          border: 0;
+        }
+        html,
+        body {
+          height: 100%;
+        }
+        .form {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #f0f0f0;
+        }
+        .inputForm {
+          width: 300px;
+          background-color: #333333;
+          color: white;
+          padding: 10px;
+          margin: 10px;
+          border-radius: 4px;
+        }
+        h1 {
+          text-align: center;
+        }
+        button {
+          padding: 5px 10px;
+          background-color: #2c78c9;
+          color: #fff;
+          border: none;
+          border-radius: 4px;
+        }
+        .buttons {
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Login Form</h1>
+    <div class="form">
+      <form action="" class="inputForm">
+        <label for="email">Email:</label>
+        <br />
+        <input type="email" id="email" name="email" required /><br /><br />
+        <label for="password">Password: </label>
+        <br />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          title=" Password must contain atleast 1 numeric digit"
+          minlength="8"
+          maxlength="16"
+          required /><br /><br />
+
+        <div class="buttons">
+          <button type="submit" onclick="registerForms()">Login</button>
+        </div>
+      </form>
+    </div>
+    <script>
+      function registerForms() {}
+      function registerForms() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        if (!email || !password) {
+          alert("Please enter email and password");
+          return false;
+        }
+
+        window.location.href = "registrationForm.html";
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+          alert("Invalid email address!");
+          return false;
+        }
+
+        const passwordPattern = /^(?=.*\d).{8,}$/;
+        if (!passwordPattern.test(password)) {
+          alert("Password must contain at least one digit.");
+          return false;
+        } else {
+          alert("User not found! Register to Login");
+          window.location.href = "registrationForm.html";
+        }
+
+        // return true;
+      }
+    </script>
+  </body>
+</html>
